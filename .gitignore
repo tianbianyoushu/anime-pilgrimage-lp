@@ -1,0 +1,13 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Node / tooling (future-proof)
+node_modules/
+dist/
+build/
+.parcel-cache/
+.turbo/
+
