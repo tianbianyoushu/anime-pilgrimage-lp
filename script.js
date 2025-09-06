@@ -186,6 +186,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Mobile menu toggle
+  const nav = document.getElementById('primary-nav');
+  const menuBtn = document.querySelector('.menu-toggle');
+  if (menuBtn && nav) {
+    const closeMenu = () => {
+      nav.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.textContent = '☰';
+    };
+    const openMenu = () => {
+      nav.classList.add('open');
+      menuBtn.setAttribute('aria-expanded', 'true');
+      menuBtn.textContent = '✕';
+    };
+    menuBtn.addEventListener('click', () => {
+      if (nav.classList.contains('open')) closeMenu(); else openMenu();
+    });
+    // Close menu when clicking a link
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+    // Close on resize to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 980) closeMenu();
+    });
+  }
+
   // Booking form AJAX submission (Formspree-compatible)
   const FORM_ENDPOINT = 'https://formspree.io/f/your-id'; // TODO: replace with your Formspree form ID
   const form = document.getElementById('booking-form');
@@ -232,4 +257,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-
