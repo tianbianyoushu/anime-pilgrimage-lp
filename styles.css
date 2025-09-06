@@ -98,7 +98,12 @@ input::placeholder, textarea::placeholder { color: #6b7487; }
   .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
   .nav { position: absolute; top: 100%; left: 0; right: 0; display: none; flex-direction: column; gap: 12px; padding: 12px 4%; background: rgba(12,15,20,0.96); border-bottom: 1px solid rgba(255,255,255,0.06); z-index: 90; }
   .nav.open { display: flex; }
-  .nav a, .contact-link { padding: 10px 12px; border-radius: 10px; white-space: nowrap; word-break: keep-all; }
+  .nav a, .contact-link, .lang-btn { 
+    display: inline-flex; align-items: center; 
+    padding: 10px 12px; border-radius: 10px; 
+    white-space: nowrap; word-break: keep-all; line-break: loose; 
+    writing-mode: horizontal-tb !important; text-orientation: mixed; 
+  }
   .contact-link { border-color: rgba(255,255,255,0.12); }
   .lang-switch { margin-left: 0; }
   .features { grid-template-columns: repeat(2, 1fr); }
