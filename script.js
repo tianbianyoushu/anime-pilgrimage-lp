@@ -375,6 +375,72 @@ const i18n = {
   }
 };
 
+// Language options (scalable; untranslated languages fall back to English copy)
+const languageOptions = [
+  { code: 'auto', name: 'Auto' },
+  { code: 'en', name: 'English' },
+  { code: 'ja', name: '日本語' },
+  { code: 'zh-CN', name: '简体中文' },
+  { code: 'zh-TW', name: '繁體中文' },
+  { code: 'ko', name: '한국어' },
+  { code: 'fr', name: 'Français' },
+  { code: 'de', name: 'Deutsch' },
+  { code: 'es', name: 'Español' },
+  { code: 'pt', name: 'Português' },
+  { code: 'it', name: 'Italiano' },
+  { code: 'ru', name: 'Русский' },
+  { code: 'ar', name: 'العربية' },
+  { code: 'th', name: 'ไทย' },
+  { code: 'vi', name: 'Tiếng Việt' },
+  { code: 'id', name: 'Bahasa Indonesia' }
+];
+
+// Country -> currency (UN members; primary legal tender)
+const countryCurrency = {
+  AF: 'AFN', AL: 'ALL', DZ: 'DZD', AD: 'EUR', AO: 'AOA', AG: 'XCD', AR: 'ARS', AM: 'AMD', AU: 'AUD', AT: 'EUR', AZ: 'AZN',
+  BS: 'BSD', BH: 'BHD', BD: 'BDT', BB: 'BBD', BY: 'BYN', BE: 'EUR', BZ: 'BZD', BJ: 'XOF', BT: 'BTN', BO: 'BOB',
+  BA: 'BAM', BW: 'BWP', BR: 'BRL', BN: 'BND', BG: 'BGN', BF: 'XOF', BI: 'BIF', CV: 'CVE', KH: 'KHR', CM: 'XAF',
+  CA: 'CAD', CF: 'XAF', TD: 'XAF', CL: 'CLP', CN: 'CNY', CO: 'COP', KM: 'KMF', CG: 'XAF', CD: 'CDF', CR: 'CRC',
+  CI: 'XOF', HR: 'EUR', CU: 'CUP', CY: 'EUR', CZ: 'CZK', DK: 'DKK', DJ: 'DJF', DM: 'XCD', DO: 'DOP', EC: 'USD',
+  EG: 'EGP', SV: 'USD', GQ: 'XAF', ER: 'ERN', EE: 'EUR', SZ: 'SZL', ET: 'ETB', FJ: 'FJD', FI: 'EUR', FR: 'EUR',
+  GA: 'XAF', GM: 'GMD', GE: 'GEL', DE: 'EUR', GH: 'GHS', GR: 'EUR', GD: 'XCD', GT: 'GTQ', GN: 'GNF', GW: 'XOF',
+  GY: 'GYD', HT: 'HTG', HN: 'HNL', HU: 'HUF', IS: 'ISK', IN: 'INR', ID: 'IDR', IR: 'IRR', IQ: 'IQD', IE: 'EUR',
+  IL: 'ILS', IT: 'EUR', JM: 'JMD', JP: 'JPY', JO: 'JOD', KZ: 'KZT', KE: 'KES', KI: 'AUD', KW: 'KWD', KG: 'KGS',
+  LA: 'LAK', LV: 'EUR', LB: 'LBP', LS: 'LSL', LR: 'LRD', LY: 'LYD', LI: 'CHF', LT: 'EUR', LU: 'EUR', MG: 'MGA',
+  MW: 'MWK', MY: 'MYR', MV: 'MVR', ML: 'XOF', MT: 'EUR', MH: 'USD', MR: 'MRU', MU: 'MUR', MX: 'MXN', FM: 'USD',
+  MD: 'MDL', MC: 'EUR', MN: 'MNT', ME: 'EUR', MA: 'MAD', MZ: 'MZN', MM: 'MMK', NA: 'NAD', NR: 'AUD', NP: 'NPR',
+  NL: 'EUR', NZ: 'NZD', NI: 'NIO', NE: 'XOF', NG: 'NGN', KP: 'KPW', MK: 'MKD', NO: 'NOK', OM: 'OMR', PK: 'PKR',
+  PW: 'USD', PA: 'USD', PG: 'PGK', PY: 'PYG', PE: 'PEN', PH: 'PHP', PL: 'PLN', PT: 'EUR', QA: 'QAR', RO: 'RON',
+  RU: 'RUB', RW: 'RWF', KN: 'XCD', LC: 'XCD', VC: 'XCD', WS: 'WST', SM: 'EUR', ST: 'STN', SA: 'SAR', SN: 'XOF',
+  RS: 'RSD', SC: 'SCR', SL: 'SLL', SG: 'SGD', SK: 'EUR', SI: 'EUR', SB: 'SBD', SO: 'SOS', ZA: 'ZAR', KR: 'KRW',
+  SS: 'SSP', ES: 'EUR', LK: 'LKR', SD: 'SDG', SR: 'SRD', SE: 'SEK', CH: 'CHF', SY: 'SYP', TJ: 'TJS', TZ: 'TZS',
+  TH: 'THB', TL: 'USD', TG: 'XOF', TO: 'TOP', TT: 'TTD', TN: 'TND', TR: 'TRY', TM: 'TMT', TV: 'AUD', UG: 'UGX',
+  UA: 'UAH', AE: 'AED', GB: 'GBP', US: 'USD', UY: 'UYU', UZ: 'UZS', VU: 'VUV', VA: 'EUR', VE: 'VES', VN: 'VND',
+  YE: 'YER', ZM: 'ZMW', ZW: 'ZWL'
+};
+
+const currencyFallbacks = { BTN: 'INR', SSP: 'SDG', STN: 'STD', SLL: 'SLL', VES: 'VES', ZWL: 'ZWL' };
+
+function populateSelectors() {
+  const langSel = document.getElementById('lang-select');
+  const countrySel = document.getElementById('country-select');
+  if (langSel && !langSel.options.length) {
+    languageOptions.forEach(({ code, name }) => {
+      const opt = document.createElement('option');
+      opt.value = code; opt.textContent = name;
+      langSel.appendChild(opt);
+    });
+  }
+  if (countrySel && !countrySel.options.length) {
+    const names = { JP: 'Japan', US: 'United States', GB: 'United Kingdom', DE: 'Germany', FR: 'France', CN: 'China', KR: 'South Korea', TW: 'Taiwan', SG: 'Singapore', AU: 'Australia', CA: 'Canada' };
+    Object.keys(countryCurrency).sort().forEach(code => {
+      const opt = document.createElement('option');
+      opt.value = code; opt.textContent = names[code] || code;
+      countrySel.appendChild(opt);
+    });
+  }
+}
+
 const currencyByLang = (lang, navLang = navigator.language || 'en-US') => {
   const map = {
     ja: 'JPY', 'zh-TW': 'TWD', 'zh-CN': 'CNY', ko: 'KRW',
@@ -438,9 +504,11 @@ function formatCurrency(amount, currency, lang) {
 }
 
 async function localizePrices(lang) {
-  const currency = currencyByLang(lang);
+  const countrySel = document.getElementById('country-select');
+  const chosenCountry = countrySel?.value;
+  const currency = chosenCountry ? (countryCurrency[chosenCountry] || 'JPY') : currencyByLang(lang);
   const rates = await fetchRatesJPY();
-  const rate = rates[currency] || 1; // JPY fallback
+  const rate = rates[currency] || rates[currencyFallbacks[currency]] || 1; // JPY fallback
   document.querySelectorAll('.price[data-jpy]').forEach(el => {
     const jpy = parseFloat(el.getAttribute('data-jpy')) || 0;
     const tplKey = el.getAttribute('data-i18n-tpl') || 'price.perPersonFrom';
@@ -460,13 +528,29 @@ async function localizePrices(lang) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('apj-lang') || (navigator.language.startsWith('en') ? 'en' : 'ja');
+  populateSelectors();
+  let saved = localStorage.getItem('apj-lang') || 'auto';
+  if (saved === 'auto') saved = (navigator.language || 'en').toLowerCase();
   applyI18n(saved);
   const select = document.getElementById('lang-select');
   if (select) {
+    select.value = localStorage.getItem('apj-lang') || 'auto';
     select.addEventListener('change', () => {
-      const lang = select.value;
-      localStorage.setItem('apj-lang', lang);
+      let lang = select.value;
+      if (lang === 'auto') lang = (navigator.language || 'en').toLowerCase();
+      localStorage.setItem('apj-lang', select.value);
+      applyI18n(lang);
+    });
+  }
+  const countrySel = document.getElementById('country-select');
+  if (countrySel) {
+    const savedCountry = localStorage.getItem('apj-country');
+    let def = savedCountry || (navigator.language.split('-')[1] || 'JP');
+    if (!countryCurrency[def]) def = 'JP';
+    countrySel.value = def;
+    countrySel.addEventListener('change', () => {
+      localStorage.setItem('apj-country', countrySel.value);
+      const lang = (localStorage.getItem('apj-lang') || 'en');
       applyI18n(lang);
     });
   }
