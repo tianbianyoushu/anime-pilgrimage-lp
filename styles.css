@@ -32,8 +32,8 @@ body {
 .nav a:hover { opacity: 1; }
 .contact-link { padding: 6px 10px; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; }
 .lang-switch { display: flex; align-items: center; gap: 8px; margin-left: 8px; }
-.lang-btn { background: transparent; border: 0; color: var(--muted); cursor: pointer; padding: 6px 6px; border-radius: 6px; }
-.lang-btn.active { color: var(--text); background: rgba(255,255,255,0.06); }
+.lang-switch select { appearance: none; -webkit-appearance: none; background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; padding: 6px 28px 6px 10px; font-weight: 600; }
+.lang-switch select:focus { outline: none; box-shadow: 0 0 0 2px rgba(106,163,255,0.35); }
 .sep { color: var(--muted); }
 
 .hero { padding: 80px 0 64px; background: radial-gradient(800px 500px at 80% 10%, rgba(106,163,255,0.15), transparent 60%), radial-gradient(900px 600px at 20% 20%, rgba(255,106,168,0.12), transparent 60%); }
@@ -104,6 +104,8 @@ input::placeholder, textarea::placeholder { color: #6b7487; }
     white-space: nowrap; word-break: keep-all; line-break: loose; 
     writing-mode: horizontal-tb !important; text-orientation: mixed; 
   }
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,1px,1px); border: 0; }
   .contact-link { border-color: rgba(255,255,255,0.12); }
   .lang-switch { margin-left: 0; }
   .features { grid-template-columns: repeat(2, 1fr); }
